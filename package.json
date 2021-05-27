@@ -1,0 +1,34 @@
+{
+  "name": "sabi-customer",
+  "version": "1.0.0",
+  "description": "A Node JS Know Your Customer(KYC) package for Africa businesses",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bytesfield/node-kyc.git"
+  },
+  "keywords": [
+    "npm",
+    "node",
+    "kyc",
+    "javascript"
+  ],
+  "author": "Abraham Udele",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bytesfield/node-kyc/issues"
+  },
+  "homepage": "https://github.com/bytesfield/node-kyc#readme",
+  "devDependencies": {
+    "jest": "^27.0.1"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0",
+    "pipeline-js": "^1.0.2",
+    "pipes-and-filters": "^0.0.4"
+  }
+}
