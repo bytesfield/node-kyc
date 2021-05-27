@@ -1,19 +1,18 @@
-const NinVerification = require('./src/services/NinVerification');
+const IdVerification = require('./src/services/IdVerification');
 
 class SabiCustomer{
     constructor(requestData = {}){
         this.requestData = requestData;
 
     }
-    
-    async verifyNin(){
 
-        const ninVerification = new NinVerification(this.requestData);
+    async verifyId(){
 
-        return await ninVerification.verify();
+        const idVerification = new IdVerification(this.requestData);
+
+        return await idVerification.verify();
     
     }
 }
-
 
 module.exports = SabiCustomer;

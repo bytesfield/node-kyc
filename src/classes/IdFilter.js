@@ -10,8 +10,10 @@ class IdFilter {
         middleName=null,
         dob=null,
         phoneNumber=null,
-        userId,
+        pin=null,
+        tin=null,
         gender=null,
+        full_name=null,
         expiry=null,
         address=null,
         identificationProof=null,
@@ -25,8 +27,10 @@ class IdFilter {
         this.middleName = middleName;
         this.dob = dob;
         this.phoneNumber = phoneNumber;
-        this.userId = userId;
+        this.pin = pin;
+        this.tin = tin;
         this.gender = gender;
+        this.full_name = full_name;
         this.expiry = expiry;
         this.address = address;
         this.identificationProof = identificationProof;
@@ -42,10 +46,21 @@ class IdFilter {
     {
         return this.country;
     }
-
+    getFullName()
+    {
+        return this.full_name;
+    }
     getIDType()
     {
         return this.idType;
+    }
+    getPin()
+    {
+        return this.pin;
+    }
+    getTin()
+    {
+        return this.tin;
     }
     getFirstName()
     {

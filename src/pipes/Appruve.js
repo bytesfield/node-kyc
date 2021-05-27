@@ -38,9 +38,9 @@ class Appruve
     async handle(IdFilter)
     {
         if (!IdFilter.isSuccessful()) {
-
+            const idType = IdFilter.getIDType().toUpperCase();
             const country=IdFilter.getCountry().toLowerCase();
-            const type = this.getType(IdFilter.getIDType());
+            const type = this.getType(idType);
             const url = 'v1/verifications/' + country + '/' + type;
 
             const idNumber =  IdFilter.getIDNumber();
@@ -52,6 +52,9 @@ class Appruve
             const expiryDate =  IdFilter.getExpiry();
             const gender =  IdFilter.getGender();
             const address =  IdFilter.getAddress();
+            const pin =  IdFilter.getPin();
+            const tin =  IdFilter.getTin();
+            const full_name =  IdFilter.getFullName();
 
             const body = {
                 'id' : idNumber,
@@ -62,7 +65,10 @@ class Appruve
                 'phone_number' : phone,
                 'expiry_date' : expiryDate,
                 'gender' : gender,
-                'address' : address
+                'address' : address,
+                'pin' : pin,
+                'tin' : tin,
+                'full_name' : full_name
             };
 
             try {
@@ -74,9 +80,11 @@ class Appruve
 
                 IdFilter.setData({
                     'handler' : IdFilter.getHandler(),
+                    'country' : IdFilter.getCountry().toUpperCase(),
+                    'message' : idType + ' Verified' + ' Successfully',
                     'data' : response
                 });
-
+                
                 return IdFilter.getData();
                 
             } catch (error) {
@@ -103,6 +111,9 @@ class Appruve
         }
         if (type === constants.idValues.TYPE_BVN) {
             return 'bvn';
+        }
+        if (type === constants.idValues.TELCO_SUBSCRIBER) {
+            return 'telco_subscriber';
         }
         return type.toLowerCase();
     }
