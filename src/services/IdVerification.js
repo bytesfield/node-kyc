@@ -1,4 +1,5 @@
 const appruve = require('../pipes/Appruve');
+const smile = require('../pipes/Smile');
 const IDFilter = require('../classes/IdFilter');
 const services = require('../config/services');
 const constants = require('../config/constants');
@@ -7,7 +8,7 @@ const { filterCountry }= require('../classes/Helper');
 const Pipeline = require('pipeline-js');
 
 let Appruve = new appruve();
-
+let Smile = new smile();
 
 class IdVerification {
 
@@ -23,7 +24,9 @@ class IdVerification {
         this.pin = data.pin,
         this.tin = data.tin,
         this.gender = data.gender,
-        this.full_name = data.first_name + ' ' + data.last_name
+        this.full_name = data.first_name + ' ' + data.last_name,
+        this.user_id = data.user_id,
+        this.company = data.company
         
     }
 
@@ -40,17 +43,23 @@ class IdVerification {
             this.pin,
             this.tin,
             this.gender,
-            this.full_name
+            this.full_name,
+            this.user_id,
+            this.company
                 
         );
 
         const AppruvePipe  = await Appruve.handle(IdFilter);
+        const SmilePipe  = await Smile.handle(IdFilter);
 
         const pipeline = new Pipeline([
-            AppruvePipe
+            AppruvePipe,
+            SmilePipe
           ]);
+
         const response = pipeline.process(IdFilter);
 
+        //Check for Appruve Handler
         if(IdFilter.getHandler() == services.appruve.client){
     
             if(IdFilter.getCountry() == 'GH'){
@@ -87,11 +96,27 @@ class IdVerification {
 
             }
 
-            if(IdFilter.getIDType() == constants.idValues.TYPE_TIN ||  IdFilter.getIDType() == constants.idValues.TYPE_KRA){
+            if(IdFilter.getIDType() == constants.idValues.TYPE_TIN 
+                ||  IdFilter.getIDType() == constants.idValues.TYPE_KRA 
+                || IdFilter.getIDType() == constants.idValues.TELCO_SUBSCRIBER  
+            ){
                 return response;
             }//Exclude Appruve Field Verification for this
 
             const isVerified = this.verifyAppruve(response);
+    
+            if(isVerified == true){
+                return response;
+            }
+                
+            return isVerified;
+
+        }
+
+        //Check for Smile Handler
+        if(IdFilter.getHandler() == services.smile.client){
+
+            const isVerified = this.verifySmile(response);
     
             if(isVerified == true){
                 return response;
@@ -111,8 +136,7 @@ class IdVerification {
      * @param {object} result
      * @return boolean
      */
-    verifyAppruve(result)
-     {
+    verifyAppruve(result){
          const data = result.data;
          
          if (! data.is_first_name_match) {
@@ -127,7 +151,24 @@ class IdVerification {
       
          return true;
  
-     }
+    }
+
+      /**
+     * Verify Smile information
+     *
+     * @param {object} result
+     * @return boolean
+     */
+    verifySmile(result){
+        const data = result.data;
+
+        if (data.Actions.Verify_ID_Number !== 'Verified') {
+            return { 'error' : data.ResultText } ;
+        }
+     
+        return true;
+
+    }
 }
 module.exports = IdVerification;
 

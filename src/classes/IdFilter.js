@@ -14,10 +14,13 @@ class IdFilter {
         tin=null,
         gender=null,
         full_name=null,
+        user_id=null,
+        company=null,
         expiry=null,
         address=null,
         identificationProof=null,
-        faceProof=null
+        faceProof=null,
+        
     ){
         this.country = country;
         this.idType = idType;
@@ -31,10 +34,13 @@ class IdFilter {
         this.tin = tin;
         this.gender = gender;
         this.full_name = full_name;
+        this.userId = user_id,
+        this.company = company
         this.expiry = expiry;
         this.address = address;
         this.identificationProof = identificationProof;
         this.faceProof = faceProof;
+        
 
     }
 
@@ -45,6 +51,10 @@ class IdFilter {
     getCountry()
     {
         return this.country;
+    }
+    getCompany()
+    {
+        return this.company;
     }
     getFullName()
     {
