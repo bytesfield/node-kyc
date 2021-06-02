@@ -77,18 +77,18 @@ class IdVerification {
                 
                 if(IdFilter.getIDType() == constants.idValues.TYPE_DRIVERS_LICENSE){
                     if(!response.data.is_full_name_match){
-                        return { 'Fullname' : 'Fullname does not match'} ;
+                        return { 'error' : 'Fullname does not match'} ;
                     }
 
                     if(!response.data.is_date_of_birth_match){
-                        return { 'Fullname' : 'Date of birth does not match'} ;
+                        return { 'error' : 'Date of birth does not match'} ;
                     }
                     return response;
                 }//Exclude Appruve Field Verification for this
 
                 if(IdFilter.getIDType() == constants.idValues.TYPE_SSNIT){
                     if(!response.data.is_full_name_match){
-                        return { 'Fullname' : 'Fullname does not match'} ;
+                        return { 'error' : 'Fullname does not match'} ;
                     }
 
                     return response;

@@ -16,7 +16,12 @@ services.appruve = {
 services.credequity = {
     'client' : 'Credequity',
     'api_key': process.env.CREDEQUITY_API_KEY,
-    'base_url': process.env.CREDEQUITY_BASE_URL
+    'api_url': process.env.CREDEQUITY_API_URL
+},
+services.verifyMe = {
+    'client' : 'VerifyMe',
+    'api_key': process.env.VERIFYME_API_KEY,
+    'api_url': process.env.VERIFYME_API_URL
 }
 
 module.exports = services;

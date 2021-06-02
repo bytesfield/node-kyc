@@ -18,7 +18,7 @@ class HttpProcessor {
                 if(client == services.credequity.client){
                     config.headers.common['Access-Key'] = `Bearer ${apiKey}`;
                 }
-                if (client == services.appruve.client) {
+                if (client == services.appruve.client || client == services.verifyMe.client ) {
                     config.headers.Authorization = `Bearer ${apiKey}`;
                 }
 

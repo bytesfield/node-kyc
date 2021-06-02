@@ -20,6 +20,12 @@ class IdFilter {
         address=null,
         identificationProof=null,
         faceProof=null,
+        data= [],
+        success=false,
+        error=[],
+        withImage=false,
+        handler='',
+        credequityProfile={}
         
     ){
         this.country = country;
@@ -40,6 +46,12 @@ class IdFilter {
         this.address = address;
         this.identificationProof = identificationProof;
         this.faceProof = faceProof;
+        this.data= data;
+        this.success=success;
+        this.error=error;
+        this.withImage=withImage;
+        this.handler=handler;
+        this.credequityProfile=credequityProfile;
         
 
     }
@@ -123,14 +135,14 @@ class IdFilter {
         return this.withImage;
     }
 
-    setCredeqProfile(nin, frscno, bvn)
+    setCredequityProfile(nin, frscno, bvn)
     {
-        this.credeqProfile=[nin,frscno,bvn];
+        this.credequityProfile = {'nin' : nin, 'frscno' : frscno, 'bvn' : bvn };
     }
 
-    getCredeqProfile()
+    getCredequityProfile()
     {
-        return this.credeqProfile;
+        return this.credequityProfile;
     }
 
     /**
