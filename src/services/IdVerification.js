@@ -1,5 +1,6 @@
 const appruve = require('../pipes/Appruve');
 const smile = require('../pipes/Smile');
+const credequity = require('../pipes/Credequity');
 const IDFilter = require('../classes/IdFilter');
 const services = require('../config/services');
 const constants = require('../config/constants');
@@ -9,6 +10,7 @@ const Pipeline = require('pipeline-js');
 
 let Appruve = new appruve();
 let Smile = new smile();
+let Credequity = new credequity();
 
 class IdVerification {
 
@@ -49,17 +51,20 @@ class IdVerification {
                 
         );
 
+        //KYC Service pipes
         const AppruvePipe  = await Appruve.handle(IdFilter);
         const SmilePipe  = await Smile.handle(IdFilter);
+        const CredequityPipe  = await Credequity.handle(IdFilter);
 
         const pipeline = new Pipeline([
             AppruvePipe,
-            SmilePipe
+            SmilePipe,
+            CredequityPipe
           ]);
 
         const response = pipeline.process(IdFilter);
 
-        //Check for Appruve Handler
+        //Validate Appruve Handler result
         if(IdFilter.getHandler() == services.appruve.client){
     
             if(IdFilter.getCountry() == 'GH'){
@@ -113,10 +118,23 @@ class IdVerification {
 
         }
 
-        //Check for Smile Handler
+        //Validate Smile Handler result
         if(IdFilter.getHandler() == services.smile.client){
 
             const isVerified = this.verifySmile(response);
+    
+            if(isVerified == true){
+                return response;
+            }
+                
+            return isVerified;
+
+        }
+
+        //Validate Credequity Handler result
+        if(IdFilter.getHandler() == services.credequity.client){
+
+            const isVerified = this.verifyCredequity(response, IdFilter);
     
             if(isVerified == true){
                 return response;
@@ -169,6 +187,58 @@ class IdVerification {
         return true;
 
     }
+
+        /**
+     * Verify Credequity information
+     *
+     * @param {object} result
+     * @param {object} IdFilter
+     * @return boolean
+     */
+    verifyCredequity(result, IdFilter){
+        const data = result.data;
+
+        if(IdFilter.getIDType() == constants.idValues.TYPE_BVN ){
+            if (data.firstName.toUpperCase() !== IdFilter.getFirstName().toUpperCase()) {
+                return { 'error' : 'Firstname does not match'} ;
+            }
+
+            if (data.lastName.toUpperCase() !== IdFilter.getLastName().toUpperCase()) {
+                return { 'error' : 'Lastname does not match'};
+            }
+
+            if (data.dateOfBirth !== IdFilter.getDOB()) {
+                return { 'error' : 'Date of birth does not match'};
+            }
+        }
+
+        if(IdFilter.getIDType() == constants.idValues.TYPE_DRIVERS_LICENSE ){
+            if (data.Firstname.toUpperCase() !== IdFilter.getFirstName().toUpperCase()) {
+                return { 'error' : 'Firstname does not match'} ;
+            }
+
+            if (data.Lastname.toUpperCase() !== IdFilter.getLastName().toUpperCase()) {
+                return { 'error' : 'Lastname does not match'};
+            }
+
+            if (data.Birthdate !== IdFilter.getDOB()) {
+                return { 'error' : 'Date of birth does not match'};
+            }
+        }
+
+        if(IdFilter.getIDType() == constants.idValues.TYPE_NIN ){
+            if (data.firstname.toUpperCase() !== IdFilter.getFirstName().toUpperCase()) {
+                return { 'error' : 'Firstname does not match'} ;
+            }
+
+            if (data.birthdate !== IdFilter.getDOB()) {
+                return { 'error' : 'Date of birth does not match'};
+            }
+        }
+
+        return true;
+    
+       }
 }
 module.exports = IdVerification;
 

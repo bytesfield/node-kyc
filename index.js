@@ -6,7 +6,7 @@ class SabiCustomer{
 
     }
 
-    async verifyId(){
+    async verifyID(){
 
         const idVerification = new IdVerification(this.requestData);
 

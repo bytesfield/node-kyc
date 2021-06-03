@@ -12,16 +12,19 @@ class HttpProcessor {
 
         //Configure axios
         axios.defaults.baseURL = baseUrl;
+        axios.defaults.headers.common['Content-Type'] = 'application/json';
+        axios.defaults.headers.common['Accept'] = 'application/json';
 
         axios.interceptors.request.use(  
             config => {
                 if(client == services.credequity.client){
-                    config.headers.common['Access-Key'] = `Bearer ${apiKey}`;
-                }
-                if (client == services.appruve.client || client == services.verifyMe.client ) {
-                    config.headers.Authorization = `Bearer ${apiKey}`;
+                    axios.defaults.headers.common['Access-Key'] = apiKey;
                 }
 
+                if (client == services.appruve.client) {
+                    config.headers.Authorization = `Bearer ${apiKey}`;
+                }
+                //console.log(config);
                 return config;
             },
             error => Promise.reject(error)

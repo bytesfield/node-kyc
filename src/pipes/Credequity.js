@@ -2,7 +2,7 @@ const httpProcessor = require('../HttpProcessor');
 const services = require('../config/services');
 const constants = require('../config/constants');
 
-class Credquity
+class Credequity
 {
 
     constructor() {
@@ -54,20 +54,22 @@ class Credquity
                         'PhoneNumber' : phone
                     };
 
-                    this.postData(IdFilter,body,url);
+                    return this.postData(IdFilter,body,url);
                 }
                 if (IdFilter.getIDType() === constants.idValues.TYPE_NIN) {
-                    const url = '/CredNin/api/v1/Identity?phoneNo=' + phone;
-                    const body = {};
+                    if (! IdFilter.isSuccessful()) {
+                        const url = '/CredNin/api/v1/Identity?phoneNo=' + phone;
+                        const body = {};
 
-                    this.postData(IdFilter,body,url);
+                        return this.postData(IdFilter,body,url);
+                    }
 
                     //If request is not successful makes post with IdNumber
                     if (! IdFilter.isSuccessful()) {
                         const url = '/CredNin/api/v1/IdentityByNin?nin=' + idNumber;
                         const body = {};
 
-                        this.postData(IdFilter,body,url);
+                        return this.postData(IdFilter,body,url);
                     }
                 }
 
@@ -80,7 +82,7 @@ class Credquity
                         'phoneNo' : phone,
                         'frscidentityNo' : idNumber
                     };
-                    this.postData(IdFilter,body,url);
+                    return this.postData(IdFilter,body,url);
                 }
 
                 if (IdFilter.getIDType() === constants.idValues.TYPE_CUSTOMER_PROFILE) {
@@ -94,7 +96,7 @@ class Credquity
                         "Bvn" : profile['bvn']
                     };
                     
-                    this.postData(IdFilter,body,url);
+                    return this.postData(IdFilter,body,url);
                 }
             }
         }
@@ -132,7 +134,7 @@ class Credquity
      * @param {string} url
      * @return response
      */
-    postData(IdFilter, body, url){
+    async postData(IdFilter, body, url){
         
         try {
             const response =  await this.process('POST', url, body);
@@ -142,14 +144,13 @@ class Credquity
                 IdFilter.confirmSuccess();
 
                 IdFilter.setHandler(this.client);
-
+                
                 IdFilter.setData({
                     'handler' : IdFilter.getHandler(),
-                    'country' : IdFilter.getCountry().toUpperCase(),
-                    'message' : idType + ' Verified' + ' Successfully',
-                    'data' : response
+                    'message' : IdFilter.getIDType() + ' Verified' + ' Successfully',
+                    'data' : response.data
                 });
-                
+
                 return IdFilter.getData();
              } else {
                 IdFilter.setError({'error' : response.error});
@@ -164,4 +165,4 @@ class Credquity
     }
 }
 
-module.exports = Credquity;
+module.exports = Credequity;

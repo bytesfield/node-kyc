@@ -20,9 +20,9 @@ class IdFilter {
         address=null,
         identificationProof=null,
         faceProof=null,
-        data= [],
+        data= {},
         success=false,
-        error=[],
+        error={},
         withImage=false,
         handler='',
         credequityProfile={}
