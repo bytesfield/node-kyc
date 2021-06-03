@@ -40,7 +40,7 @@ class Appruve
             const idType = IdFilter.getIDType().toUpperCase();
             const country=IdFilter.getCountry().toLowerCase();
             const type = this.getType(idType);
-            const url = 'v1/verifications/' + country + '/' + type;
+            const url = '/v1/verifications/' + country + '/' + type;
 
             const idNumber =  IdFilter.getIDNumber();
             const firstName =  IdFilter.getFirstName();

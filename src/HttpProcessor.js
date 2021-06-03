@@ -15,16 +15,16 @@ class HttpProcessor {
         axios.defaults.headers.common['Content-Type'] = 'application/json';
         axios.defaults.headers.common['Accept'] = 'application/json';
 
+        if(client == services.credequity.client){
+            axios.defaults.headers.common['Access-Key'] = apiKey;
+        }
+        
         axios.interceptors.request.use(  
             config => {
-                if(client == services.credequity.client){
-                    axios.defaults.headers.common['Access-Key'] = apiKey;
-                }
-
                 if (client == services.appruve.client) {
                     config.headers.Authorization = `Bearer ${apiKey}`;
                 }
-                //console.log(config);
+
                 return config;
             },
             error => Promise.reject(error)
@@ -41,6 +41,7 @@ class HttpProcessor {
     * @param {object|array|formData} payload The payload data to send with the call
     */
     process(method, url, payload = {}) {
+        
         return new Promise((res, rej) => {
             this.customAxios({
                 method: method,

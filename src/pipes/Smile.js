@@ -51,7 +51,7 @@ class Smile
 
             const idType = IdFilter.getIDType();
             const country = IdFilter.getCountry();
-            const url = 'v1/id_verification';
+            const url = '/v1/id_verification';
 
             const idNumber =  IdFilter.getIDNumber();
             const firstName =  IdFilter.getFirstName();

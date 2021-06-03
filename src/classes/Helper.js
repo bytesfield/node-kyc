@@ -1,5 +1,8 @@
 
 const filterCountry = (country)=>{
+    if(country == null){
+        return 'NG';
+    }
     country = country.toUpperCase();
 
     if(country == 'NIGERIA'){

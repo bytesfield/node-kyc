@@ -4,7 +4,7 @@
   "description": "A Node JS Know Your Customer(KYC) package for Africa businesses",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --forceExit --detectOpenHandles --maxWorkers=1"
   },
   "repository": {
     "type": "git",

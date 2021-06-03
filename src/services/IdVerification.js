@@ -16,7 +16,7 @@ class IdVerification {
 
      constructor(data) {
         this.country = filterCountry(data.country),
-        this.id_type = data.id_type.toLocaleUpperCase(),
+        this.id_type = data.id_type.toUpperCase(),
         this.id_number = data.id,
         this.first_name = data.first_name,
         this.last_name = data.last_name,
@@ -51,18 +51,15 @@ class IdVerification {
                 
         );
 
-        //KYC Service pipes
-        const AppruvePipe  = await Appruve.handle(IdFilter);
-        const SmilePipe  = await Smile.handle(IdFilter);
-        const CredequityPipe  = await Credequity.handle(IdFilter);
 
         const pipeline = new Pipeline([
-            AppruvePipe,
-            SmilePipe,
-            CredequityPipe
+            await Credequity.handle(IdFilter),
+            //await Appruve.handle(IdFilter),
+            //await Smile.handle(IdFilter)
+            
           ]);
 
-        const response = pipeline.process(IdFilter);
+        const response = pipeline.process();
 
         //Validate Appruve Handler result
         if(IdFilter.getHandler() == services.appruve.client){
@@ -213,13 +210,6 @@ class IdVerification {
         }
 
         if(IdFilter.getIDType() == constants.idValues.TYPE_DRIVERS_LICENSE ){
-            if (data.Firstname.toUpperCase() !== IdFilter.getFirstName().toUpperCase()) {
-                return { 'error' : 'Firstname does not match'} ;
-            }
-
-            if (data.Lastname.toUpperCase() !== IdFilter.getLastName().toUpperCase()) {
-                return { 'error' : 'Lastname does not match'};
-            }
 
             if (data.Birthdate !== IdFilter.getDOB()) {
                 return { 'error' : 'Date of birth does not match'};

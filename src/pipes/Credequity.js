@@ -14,7 +14,7 @@ class Credequity
         * HttpProcessor class to handle axios calls
         */
         this.processor = new httpProcessor(this.baseUrl, this.apiKey, this.client);
-
+        
     }
 
     /**
@@ -135,7 +135,7 @@ class Credequity
      * @return response
      */
     async postData(IdFilter, body, url){
-        
+      
         try {
             const response =  await this.process('POST', url, body);
         
