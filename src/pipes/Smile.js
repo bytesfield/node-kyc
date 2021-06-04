@@ -1,13 +1,8 @@
 const httpProcessor = require('../HttpProcessor');
 const services = require('../config/services');
-const constants = require('../config/constants');
 const md5 = require('md5');
 const random = require('@aspiesoft/random-number-js');
 const crypto = require('crypto');
-// const https = require('https');
-// const request = require('request'); 
-// const URLSafeBase64 = require('urlsafe-base64');
-const uuid = require('uuid4'); 
 
 class Smile
 {

@@ -1,18 +1,14 @@
 const IdVerification = require('./src/services/IdVerification');
 
 class SabiCustomer{
-    constructor(requestData = {}){
-        this.requestData = requestData;
 
-    }
+    async verifyID(requestData = {}){
 
-    async verifyID(){
-
-        if(Object.keys(this.requestData).length <= 0 ){
+        if(Object.keys(requestData).length <= 0 ){
             return { 'error' : 'Payload must not be empty'};
         }
 
-        const idVerification = new IdVerification(this.requestData);
+        const idVerification = new IdVerification(requestData);
 
         return await idVerification.verify();
     

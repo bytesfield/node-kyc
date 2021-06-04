@@ -1,6 +1,8 @@
 const SabiCustomer = require('../../index');
 const services = require('../../src/config/services');
 
+const sabiCustomer = new SabiCustomer();
+
 describe("Credequity Test", () => {
 
     it("Should not verify NIN if First Name do not match", async () => {
@@ -15,9 +17,7 @@ describe("Credequity Test", () => {
 
         }
 
-        const sabiCustomer = new SabiCustomer(payload);
-
-        const response = await sabiCustomer.verifyID();
+        const response = await sabiCustomer.verifyID(payload);
 
         expect(response.error).toEqual('Firstname does not match');
     }, 80000);
@@ -33,9 +33,7 @@ describe("Credequity Test", () => {
             "phone_number": "1234567890"
         }
 
-        const sabiCustomer = new SabiCustomer(payload);
-
-        const response = await sabiCustomer.verifyID();
+        const response = await sabiCustomer.verifyID(payload);
 
         expect(response.error).toEqual('Date of birth does not match');
     }, 80000);
@@ -52,9 +50,7 @@ describe("Credequity Test", () => {
 
         }
 
-        const sabiCustomer = new SabiCustomer(payload);
-
-        const response = await sabiCustomer.verifyID();
+        const response = await sabiCustomer.verifyID(payload);
         
         expect(response.message).toEqual('NIN Verified Successfully');
         expect(response.handler).toEqual(services.credequity.client);
@@ -72,9 +68,7 @@ describe("Credequity Test", () => {
 
         }
 
-        const sabiCustomer = new SabiCustomer(payload);
-
-        const response = await sabiCustomer.verifyID();
+        const response = await sabiCustomer.verifyID(payload);
 
         expect(response.error).toEqual('Firstname does not match');
     }, 80000);
@@ -91,9 +85,7 @@ describe("Credequity Test", () => {
 
         }
 
-        const sabiCustomer = new SabiCustomer(payload);
-
-        const response = await sabiCustomer.verifyID();
+        const response = await sabiCustomer.verifyID(payload);
 
         expect(response.error).toEqual('Lastname does not match');
     }, 80000);
@@ -111,9 +103,7 @@ describe("Credequity Test", () => {
 
         }
 
-        const sabiCustomer = new SabiCustomer(payload);
-
-        const response = await sabiCustomer.verifyID();
+        const response = await sabiCustomer.verifyID(payload);
 
         expect(response.error).toEqual('Date of birth does not match');
     }, 80000);
@@ -130,9 +120,7 @@ describe("Credequity Test", () => {
 
         }
 
-        const sabiCustomer = new SabiCustomer(payload);
-
-        const response = await sabiCustomer.verifyID();
+        const response = await sabiCustomer.verifyID(payload);
 
         expect(response.message).toEqual('BVN Verified Successfully');
         expect(response.handler).toEqual(services.credequity.client);
@@ -150,9 +138,7 @@ describe("Credequity Test", () => {
 
         }
 
-        const sabiCustomer = new SabiCustomer(payload);
-
-        const response = await sabiCustomer.verifyID();
+        const response = await sabiCustomer.verifyID(payload);
 
         expect(response.error).toEqual('Date of birth does not match');
     }, 80000);
@@ -169,9 +155,7 @@ describe("Credequity Test", () => {
 
         }
 
-        const sabiCustomer = new SabiCustomer(payload);
-
-        const response = await sabiCustomer.verifyID();
+        const response = await sabiCustomer.verifyID(payload);
 
         expect(response.message).toEqual('DRIVERS_LICENSE Verified Successfully');
         expect(response.handler).toEqual(services.credequity.client);
@@ -181,9 +165,7 @@ describe("Credequity Test", () => {
 
         const payload = {}
 
-        const sabiCustomer = new SabiCustomer(payload);
-
-        const response = await sabiCustomer.verifyID();
+        const response = await sabiCustomer.verifyID(payload);
 
         expect(response.error).toEqual('Payload must not be empty');
     }, 80000);

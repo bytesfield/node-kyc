@@ -1,5 +1,5 @@
 
-const filterCountry = (country)=>{
+const filterCountry = (country = null)=>{
     if(country == null){
         return 'NG';
     }
