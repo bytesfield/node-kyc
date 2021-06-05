@@ -165,17 +165,27 @@ class IdFilter {
         return this.userId;
     }
     /**
-     * sets the success to true
+     * Sets success to true
      *
      * @return void
      */
     confirmSuccess()
     {
-        this.success=true;
+        this.success = true;
     }
 
     /**
-     * sets the pipe that handleld the request
+     * Sets success to true
+     *
+     * @return void
+     */
+    confirmSuccess()
+    {
+        this.success = true;
+    }
+
+    /**
+     * Sets the pipe that handled the request
      *
      * @param string $handler
      * @return void
@@ -186,7 +196,7 @@ class IdFilter {
     }
 
     /**
-     * gets the pipe that hanlded the request
+     * Gets the pipe that handled the request
      *
      * @return string
      */
@@ -196,7 +206,7 @@ class IdFilter {
     }
 
     /**
-     * sets data returned from the request
+     * Sets data returned from the request
      *
      * @param array $data
      * @return void
@@ -207,18 +217,18 @@ class IdFilter {
     }
 
     /**
-     * sets the error associated with request
+     * Sets the error associated with request
      *
      * @param array $error
      * @return void
      */
-    setError(error = [])
+    setError(error = {})
     {
         this.error=error;
     }
 
     /**
-     * return error associated with request
+     * Return error associated with request
      *
      * @return string
      */
@@ -228,7 +238,7 @@ class IdFilter {
     }
 
     /**
-     * returns the data gotten from the request
+     * Returns the data gotten from the request
      *
      * @return array
      */
@@ -238,7 +248,7 @@ class IdFilter {
     }
 
     /**
-     * checks if the request is successful
+     * Checks if the request is successful
      *
      * @return boolean
      */

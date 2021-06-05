@@ -34,7 +34,6 @@ class Appruve
      */
     async handle(IdFilter)
     {
-        
         if (!IdFilter.isSuccessful()) {
             
             const idType = IdFilter.getIDType().toUpperCase();
@@ -73,11 +72,8 @@ class Appruve
             try {
                 const response = await this.process('POST', url, body);
                 
-                const confirmSuccess = IdFilter.confirmSuccess();
+                IdFilter.confirmSuccess();
                 
-                // if(!confirmSuccess){
-                //     return { 'error' : 'Service not available at the moment '}
-                // }
                 IdFilter.setHandler(this.client);
 
                 IdFilter.setData({

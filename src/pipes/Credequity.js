@@ -10,11 +10,6 @@ class Credequity
         this.apiKey = services.credequity.api_key;
         this.baseUrl = services.credequity.api_url;
 
-        /**
-        * HttpProcessor class to handle axios calls
-        */
-        
-        
     }
 
     /**
@@ -25,9 +20,9 @@ class Credequity
      * @param {object|formData} payload The payload data to send with the call
      */
      process(method, url, payload) {
-         //HttpProcessor class to handle axios calls
+        //HttpProcessor class to handle axios calls
         let processor = new httpProcessor(this.baseUrl, this.apiKey, this.client);
-        
+
         return processor.process(method, url, payload)
     }
 
@@ -90,6 +85,7 @@ class Credequity
 
                 if (IdFilter.getIDType() === constants.idValues.TYPE_CUSTOMER_PROFILE) {
                     const url = '/CredBvn/api/v1/CustomerProfile';
+                    IdFilter.setCredequityProfile();
                     const profile = IdFilter.getCredequityProfile();
 
                     const body = {

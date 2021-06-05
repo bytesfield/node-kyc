@@ -59,29 +59,6 @@ const sabiCustomer = new SabiCustomer();
 
 ### For Nigeria (NG)
 
-#### CREDEQUITY SERVICE
-
-##### ID Verification
-
-###### Supported ID Types Values:
-
-```javascript
-NIN, BVN, DRIVERS_LICENSE;
-```
-
-```javascript
-const payload = {
-  id: "00000000000",
-  id_type: "ID_TYPE",
-  first_name: "KAYODE",
-  last_name: "BABATUNDE",
-  date_of_birth: "24-11-1975",
-  phone_number: "1234567890",
-};
-
-const response = await sabiCustomer.verifyID(payload);
-```
-
 #### APPRUVE SERVICE
 
 ##### ID Verification
@@ -129,3 +106,176 @@ const payload = {
 
 const response = await sabiCustomer.verifyID(payload);
 ```
+
+#### CREDEQUITY SERVICE
+
+##### ID Verification
+
+###### Supported ID Types Values:
+
+```javascript
+NIN, BVN, DRIVERS_LICENSE;
+```
+
+```javascript
+const payload = {
+  id: "00000000000",
+  id_type: "ID_TYPE",
+  first_name: "KAYODE",
+  last_name: "BABATUNDE",
+  date_of_birth: "24-11-1975",
+  phone_number: "1234567890",
+};
+
+const response = await sabiCustomer.verifyID(payload);
+```
+
+### For Ghana (GH)
+
+#### SMILE IDENTITY SERVICE
+
+##### ID Verification
+
+Supported ID Types Values:
+
+```javascript
+SSNIT, VOTER_ID, DRIVERS_LICENSE;
+```
+
+```javascript
+const payload = {
+  id: "48126406145",
+  id_type: "ID_TYPE_VALUE",
+  country: "GH",
+  first_name: "Michael",
+  last_name: "Olugbenga",
+  user_id: "USER_UNIQUE_ID",
+};
+
+const response = await sabiCustomer.verifyID(payload);
+```
+
+#### APPRUVE SERVICE
+
+##### ID Verification
+
+Supported ID Types Values:
+
+```javascript
+SSNIT, TIN, DRIVERS_LICENSE, PASSPORT, VOTER_CARD;
+```
+
+```javascript
+const payload = {
+  id: "48126406145", //For TIN change this to tin
+  id_type: "ID_TYPE_VALUE",
+  country: "GH",
+  first_name: "Michael",
+  last_name: "Olugbenga",
+  date_of_birth: "24-11-1975",
+};
+
+const response = await sabiCustomer.verifyID(payload);
+```
+
+### For Kenya (KE)
+
+#### SMILE IDENTITY SERVICE
+
+##### ID Verification
+
+Supported ID Types Values:
+
+```javascript
+ALIEN_CARD, NATIONAL_ID, PASSPORT;
+```
+
+```javascript
+const payload = {
+  id: "48126406145",
+  id_type: "ID_TYPE_VALUE",
+  country: "KE",
+  first_name: "Michael",
+  last_name: "Olugbenga",
+  user_id: "USER_UNIQUE_ID",
+};
+
+const response = await sabiCustomer.verifyID(payload);
+```
+
+#### APPRUVE SERVICE
+
+##### ID Verification
+
+Supported ID Types Values:
+
+```javascript
+NATIONAL_ID, KRA, PASSPORT;
+```
+
+```javascript
+const payload = {
+  id: "48126406145", //For KRA Change this to pin
+  id_type: "ID_TYPE_VALUE",
+  country: "KE",
+  first_name: "Michael",
+  last_name: "Olugbenga",
+  date_of_birth: "24-11-1975",
+};
+
+const response = await sabiCustomer.verifyID(payload);
+```
+
+_Credequity not supported for Kenya_
+
+### For South Africa (ZA)
+
+#### SMILE IDENTITY SERVICE
+
+##### ID Verification
+
+Supported ID Types Values:
+
+```javascript
+NATIONAL_ID, NATIONAL_ID_NO_PHOTO;
+```
+
+```javascript
+const payload = {
+  id: "48126406145",
+  id_type: "ID_TYPE_VALUE",
+  country: "ZA",
+  first_name: "Michael",
+  last_name: "Olugbenga",
+  user_id: "USER_UNIQUE_ID",
+};
+
+const response = await sabiCustomer.verifyID(payload);
+```
+
+_Credequity and Appruve not supported for South Africa_
+
+### For Uganda (UG)
+
+#### APPRUVE SERVICE
+
+##### ID Verification
+
+Supported ID Types Values:
+
+```javascript
+TELCO_SUBSCRIBER;
+```
+
+```javascript
+const payload = {
+  id: "48126406145",
+  id_type: "ID_TYPE_VALUE",
+  country: "UG",
+  phone: "+256000000003",
+};
+
+const response = await sabiCustomer.verifyID(payload);
+```
+
+_Credequity and Smile not supported for Uganda_
