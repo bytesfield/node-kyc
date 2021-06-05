@@ -50,12 +50,12 @@ class IdVerification {
             this.company
                 
         );
-
-
+        
+        //const AppruvePipe = await Appruve.handle(IdFilter);
         const pipeline = new Pipeline([
-            await Credequity.handle(IdFilter),
-            //await Appruve.handle(IdFilter),
-            //await Smile.handle(IdFilter)
+            //await Credequity.handle(IdFilter),
+            //await Appruve.handle(IdFilter)
+            await Smile.handle(IdFilter)
             
           ]);
 

@@ -4,13 +4,13 @@ It is a Know Your Customer (KYC) Nodejs Library. In Development Stage
 
 # Description
 
-This is a Know Your Customer (KYC) Nodejs Package to verify business's customer identity using Smile Identity, Appruve and Credequity KYC services. This service currently support countries like Nigeria(NG), Ghana(GH), Kenya(KE), Uganda(UG).
+A Know Your Customer (KYC) Nodejs Package to verify business's customer identity using Smile Identity, Appruve and Credequity KYC services. This service currently support countries like Nigeria(NG), Ghana(GH), Kenya(KE), Uganda(UG).
 
 ## Installation
 
 [Node](https://nodejs.org/en/) 14 + and [NPM](https://www.npmjs.com/) are required.
 
-To get the latest version of Sabi Customer, simply require it
+To get the latest version of Sabi Customer, simply install it
 
 ```bash
 npm install sabi-customer
@@ -57,17 +57,13 @@ const SabiCustomer = require("sabi-customer");
 const sabiCustomer = new SabiCustomer();
 ```
 
-#### For Nigeria (NG)
+### For Nigeria (NG)
 
-```javascript
-const SabiCustomer = require("sabi-customer");
-```
+#### CREDEQUITY SERVICE
 
-##### CREDEQUITY Service
+##### ID Verification
 
-###### ID Verification
-
-Supported ID Types Values:
+###### Supported ID Types Values:
 
 ```javascript
 NIN, BVN, DRIVERS_LICENSE;
@@ -81,6 +77,54 @@ const payload = {
   last_name: "BABATUNDE",
   date_of_birth: "24-11-1975",
   phone_number: "1234567890",
+};
+
+const response = await sabiCustomer.verifyID(payload);
+```
+
+#### APPRUVE SERVICE
+
+##### ID Verification
+
+###### Supported ID Types Values:
+
+```javascript
+NIN, BVN, DRIVERS_LICENSE, PASSPORT, TIN, VOTER_CARD;
+```
+
+```javascript
+const payload = {
+  id: "48126406145",
+  id_type: "ID_TYPE_VALUE",
+  country: "NG",
+  first_name: "Michael",
+  last_name: "Olugbenga",
+  middle_name: "Peter",
+  date_of_birth: "1982-05-20",
+};
+
+const response = await sabiCustomer.verifyID(payload);
+```
+
+#### SMILE IDENTITY SERVICE
+
+##### ID Verification
+
+Supported ID Types Values:
+
+```javascript
+NIN_SLIP, BVN, DRIVERS_LICENSE, CAC, TIN, VOTER_ID;
+```
+
+```javascript
+const payload = {
+  id: "48126406145",
+  id_type: "ID_TYPE_VALUE",
+  country: "NG",
+  first_name: "Michael",
+  last_name: "Olugbenga",
+  user_id: "USER_UNIQUE_ID",
+  company: "COMPANY_NAME", //Include this for CAC
 };
 
 const response = await sabiCustomer.verifyID(payload);

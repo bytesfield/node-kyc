@@ -10,11 +10,6 @@ class Appruve
         this.apiKey = services.appruve.api_key;
         this.baseUrl = services.appruve.api_url;
 
-        /**
-        * HttpProcessor class to handle axios calls
-        */
-        this.processor = new httpProcessor(this.baseUrl, this.apiKey, this.client);
-
     }
 
     /**
@@ -25,7 +20,10 @@ class Appruve
      * @param {object|formData} payload The payload data to send with the call
      */
      process(method, url, payload) {
-        return this.processor.process(method, url, payload)
+         //HttpProcessor class to handle axios calls
+        let processor = new httpProcessor(this.baseUrl, this.apiKey, this.client);
+        
+        return processor.process(method, url, payload)
     }
 
     /**
@@ -36,12 +34,14 @@ class Appruve
      */
     async handle(IdFilter)
     {
+        
         if (!IdFilter.isSuccessful()) {
+            
             const idType = IdFilter.getIDType().toUpperCase();
             const country=IdFilter.getCountry().toLowerCase();
             const type = this.getType(idType);
             const url = '/v1/verifications/' + country + '/' + type;
-
+            
             const idNumber =  IdFilter.getIDNumber();
             const firstName =  IdFilter.getFirstName();
             const lastName =  IdFilter.getLastName();
@@ -69,12 +69,15 @@ class Appruve
                 'tin' : tin,
                 'full_name' : full_name
             };
-
+            
             try {
                 const response = await this.process('POST', url, body);
-
-                IdFilter.confirmSuccess();
-
+                
+                const confirmSuccess = IdFilter.confirmSuccess();
+                
+                // if(!confirmSuccess){
+                //     return { 'error' : 'Service not available at the moment '}
+                // }
                 IdFilter.setHandler(this.client);
 
                 IdFilter.setData({

@@ -13,7 +13,7 @@ class Credequity
         /**
         * HttpProcessor class to handle axios calls
         */
-        this.processor = new httpProcessor(this.baseUrl, this.apiKey, this.client);
+        
         
     }
 
@@ -25,7 +25,10 @@ class Credequity
      * @param {object|formData} payload The payload data to send with the call
      */
      process(method, url, payload) {
-        return this.processor.process(method, url, payload)
+         //HttpProcessor class to handle axios calls
+        let processor = new httpProcessor(this.baseUrl, this.apiKey, this.client);
+        
+        return processor.process(method, url, payload)
     }
 
     /**
