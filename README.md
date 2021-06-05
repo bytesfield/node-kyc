@@ -295,8 +295,8 @@ If you discover any security related issues, please email abrahamudele@gmail ins
 ## Credits
 
 - [Abraham Udele](https://github.com/bytesfield) <br/>
-  Find me on
-  <a href="https://twitter.com/SaintAbrahams/">Twitter.</a>
+  Find me on <br/>
+  <a href="https://twitter.com/SaintAbrahams/">Twitter.</a> <br/>
   <a href="https://www.linkedin.com/in/abraham-udele-246003130/">Linkedin.</a>
 
 ## License
