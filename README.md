@@ -63,7 +63,7 @@ const sabiCustomer = new SabiCustomer();
 SMILE, APPRUVE, CREDEQUITY;
 ```
 
-_If you want a specific handler to handle your request you can pass a second argument to the verifyID() method as shown below_
+_If you want a specific handler to handle your request you can pass a second argument to the verifyID() method as shown below, else ignore it and it will pass through sabi-customer's pipeline and return the result and the pipe that handled it_
 
 ```javascript
 const response = await sabiCustomer.verifyID(payload, "SMILE");
