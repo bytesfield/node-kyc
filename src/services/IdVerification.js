@@ -6,8 +6,6 @@ const services = require('../config/services');
 const constants = require('../config/constants');
 const { filterCountry }= require('../classes/Helper');
 
-const Pipeline = require('pipeline-js');
-
 let Appruve = new appruve();
 let Smile = new smile();
 let Credequity = new credequity();
@@ -32,7 +30,7 @@ class IdVerification {
         
     }
 
-    async verify(){
+    async verify(handler){
         const IdFilter = new IDFilter(
             this.country,  
             this.id_type,  
@@ -50,16 +48,36 @@ class IdVerification {
             this.company
                 
         );
-        
-        //const AppruvePipe = await Appruve.handle(IdFilter);
-        const pipeline = new Pipeline([
-            //await Credequity.handle(IdFilter),
-            //await Appruve.handle(IdFilter)
-            await Smile.handle(IdFilter)
-            
-          ]);
 
-        const response = pipeline.process();
+        var response = null;
+        const pipes = [Credequity,Appruve,Smile];
+
+        if(handler != null){
+            
+            if(handler.toUpperCase() === services.credequity.client.toUpperCase()){
+                response = await pipes[0].handle(IdFilter);
+            }
+            if(handler.toUpperCase() === services.appruve.client.toUpperCase()){
+                response = await pipes[1].handle(IdFilter);
+            }
+            if(handler.toUpperCase() === services.smile.client.toUpperCase()){
+                response = await pipes[2].handle(IdFilter);
+            }
+        }else{
+            var i;
+
+            for (i = 0; i < pipes.length; i++) {
+
+                var executedPipe  = await pipes[i].handle(IdFilter);
+
+                if(IdFilter.isSuccessful()){
+                    response = executedPipe;
+                    break;
+                }
+                
+                response = execute;
+            }
+        }
 
         //Validate Appruve Handler result
         if(IdFilter.getHandler() == services.appruve.client){

@@ -1,7 +1,7 @@
 const httpProcessor = require('../HttpProcessor');
 const services = require('../config/services');
 const md5 = require('md5');
-const random = require('@aspiesoft/random-number-js');
+const { randomNumber }= require('../classes/Helper');
 const crypto = require('crypto');
 
 
@@ -41,7 +41,7 @@ class Smile
     {
         if (!IdFilter.isSuccessful()) {
             const generatedKey = this.generateSecretKey(this.partnerId, this.apiKey);
-            const jobId = md5(Date.now()+ random(1, 1000000000));
+            const jobId = md5(Date.now() + randomNumber(1000000000));
 
             const idType = IdFilter.getIDType();
             const country = IdFilter.getCountry();
@@ -79,7 +79,7 @@ class Smile
 
             try {
                 const response = await this.process('POST', url, body);
-
+                
                 IdFilter.confirmSuccess();
 
                 IdFilter.setHandler(this.client);
@@ -90,14 +90,14 @@ class Smile
                     'message' : idType + ' Verified' + ' Successfully',
                     'data' : response
                 });
-                
+                //console.log(IdFilter.getData());
                 return IdFilter.getData();
                 
             } catch (error) {
                 //Error occurred
                 IdFilter.setError({'error' : error});
                 
-                console.log(error);
+                //console.log(error);
                 return IdFilter.getError();
             }
         }

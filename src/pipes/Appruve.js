@@ -4,7 +4,6 @@ const constants = require('../config/constants');
 
 class Appruve
 {
-
     constructor() {
         this.client = services.appruve.client;
         this.apiKey = services.appruve.api_key;
@@ -71,7 +70,7 @@ class Appruve
             
             try {
                 const response = await this.process('POST', url, body);
-                
+
                 IdFilter.confirmSuccess();
                 
                 IdFilter.setHandler(this.client);
@@ -82,7 +81,7 @@ class Appruve
                     'message' : idType + ' Verified' + ' Successfully',
                     'data' : response
                 });
-                
+                //console.log(IdFilter.getData());
                 return IdFilter.getData();
                 
             } catch (error) {

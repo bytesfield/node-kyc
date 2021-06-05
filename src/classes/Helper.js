@@ -23,6 +23,20 @@ const filterCountry = (country = null)=>{
     return country;
 }
 
+const randomNumber = (max)=> {
+    return Math.floor(Math.random() * max);
+}
+
+const isString = (string) =>{
+    if (typeof string === 'string' || string instanceof String){
+        return true;
+    }
+    return false;
+}
+  
+
 module.exports = {
-    filterCountry
+    filterCountry,
+    randomNumber,
+    isString
 };

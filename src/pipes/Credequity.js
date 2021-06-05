@@ -139,7 +139,7 @@ class Credequity
             const response =  await this.process('POST', url, body);
         
             if (response.message === 'Successful') {
-            
+
                 IdFilter.confirmSuccess();
 
                 IdFilter.setHandler(this.client);
@@ -149,7 +149,7 @@ class Credequity
                     'message' : IdFilter.getIDType() + ' Verified' + ' Successfully',
                     'data' : response.data
                 });
-
+                //console.log(IdFilter.getData());
                 return IdFilter.getData();
              } else {
                 IdFilter.setError({'error' : response.error});
