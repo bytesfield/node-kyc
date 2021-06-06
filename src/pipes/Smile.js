@@ -18,13 +18,13 @@ class Smile
     
 
     /**
-     * Process axios calls
-     * 
-     * @param {string} method The call method get|post|put|delete|patch
-     * @param {string} url The url to call
-     * @param {object|formData} payload The payload data to send with the call
-     */
-     process(method, url, payload) {
+    * Process axios calls
+    * 
+    * @param {string} method The call method get|post|put|delete|patch
+    * @param {string} url The url to call
+    * @param {object|formData} payload The payload data to send with the call
+    */
+    process(method, url, payload) {
         //HttpProcessor class to handle axios calls
         let processor = new httpProcessor(this.baseUrl, this.apiKey, this.client);
         
@@ -32,11 +32,11 @@ class Smile
     }
 
     /**
-     * Filter id requests
-     *
-     * @param IdFilter IdFilter
-     * @return response
-     */
+    * Handles the ID request
+    *
+    * @param {object} IdFilter
+    * @return {object}
+    */
     async handle(IdFilter)
     {
         if (!IdFilter.isSuccessful()) {
@@ -90,7 +90,7 @@ class Smile
                     'message' : idType + ' Verified' + ' Successfully',
                     'data' : response
                 });
-                //console.log(IdFilter.getData());
+
                 return IdFilter.getData();
                 
             } catch (error) {
@@ -105,14 +105,13 @@ class Smile
     }
 
     /**
-     * Generate Secret Key
-     *
-     * @param {string} partnerId
-     * @param {string} apiKey
-     * @return object
-     */
-     generateSecretKey(partnerId, apiKey)
-     {
+    * Generate Secret Key
+    *
+    * @param {string} partnerId
+    * @param {string} apiKey
+    * @return {object}
+    */
+    generateSecretKey(partnerId, apiKey){
         // Calculating outgoing signature:
         const timestamp = Date.now();
 
@@ -128,14 +127,14 @@ class Smile
         return {'secretKey' : secretKey, 'timestamp' :timestamp };
      }
 
-     /**
-     * Confirm Secret Key
-     *
-     * @param {string} timestamp
-     * @param {string} secretKey
-     * @return boolean
-     */
-     confirmSecretKey(timestamp, secretKey){
+    /**
+    * Confirm Secret Key
+    *
+    * @param {string} timestamp
+    * @param {string} secretKey
+    * @return boolean
+    */
+    confirmSecretKey(timestamp, secretKey){
 
         var encrypted, hashed;
         [encrypted, hashed] = secretKey.split("|")

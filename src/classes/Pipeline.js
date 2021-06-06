@@ -2,11 +2,11 @@
 class Pipeline {
 
     /**
-     * Set the object being sent through the pipeline.
-     *
-     * @param  {mixed}  passable
-     * @return this
-     */
+    * Set the object being sent through the pipeline.
+    *
+    * @param  {mixed}  passable
+    * @return this
+    */
     send(passable){
         this.passable = passable;
 
@@ -14,11 +14,11 @@ class Pipeline {
     }
 
     /**
-     * Set the array of pipes.
-     *
-     * @param  {array|mixed } pipes
-     * @return this
-     */
+    * Set the array of pipes.
+    *
+    * @param  {array|mixed } pipes
+    * @return this
+    */
     through(pipes){
         this.pipes = Array.isArray(pipes) ? pipes : null;
 
@@ -27,23 +27,22 @@ class Pipeline {
 
 
     /**
-     * Set the method to call on the pipes.
-     *
-     * @param  {string}  method
-     * @return this
-     */
-     via(method)
-     {
+    * Set the method to call on the pipes.
+    *
+    * @param  {string}  method
+    * @return this
+    */
+    via(method){
         this.method = method;
  
         return this;
-     }
+    }
 
      /**
-     * Run the pipeline with a final destination.
-     *
-     * @return mixed
-     */
+    * Run the pipeline with a final destination.
+    *
+    * @return mixed
+    */
     async thenReturn(){
         var i;
   

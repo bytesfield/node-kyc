@@ -12,13 +12,13 @@ class Appruve
     }
 
     /**
-     * Process axios calls
-     * 
-     * @param {string} method The call method get|post|put|delete|patch
-     * @param {string} url The url to call
-     * @param {object|formData} payload The payload data to send with the call
-     */
-     process(method, url, payload) {
+    * Process axios calls
+    * 
+    * @param {string} method The call method get|post|put|delete|patch
+    * @param {string} url The url to call
+    * @param {object|formData} payload The payload data to send with the call
+    */
+    process(method, url, payload) {
          //HttpProcessor class to handle axios calls
         let processor = new httpProcessor(this.baseUrl, this.apiKey, this.client);
         
@@ -26,11 +26,11 @@ class Appruve
     }
 
     /**
-     * Filter id requests
-     *
-     * @param IdFilter IdFilter
-     * @return response
-     */
+    * Handles the ID request
+    *
+    * @param {object} IdFilter
+    * @return {object}
+    */
     async handle(IdFilter)
     {
         if (!IdFilter.isSuccessful()) {
@@ -81,7 +81,7 @@ class Appruve
                     'message' : idType + ' Verified' + ' Successfully',
                     'data' : response
                 });
-                //console.log(IdFilter.getData());
+
                 return IdFilter.getData();
                 
             } catch (error) {
@@ -95,6 +95,12 @@ class Appruve
 
     }
 
+    /**
+     * Transform the ID
+     *
+     * @param {string} type
+     * @return {string}
+     */
     getType(type)
     {
         if (type === constants.idValues.TYPE_NATIONAL_ID  || type === constants.idValues.TYPE_NIN ) {

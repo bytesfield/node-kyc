@@ -56,18 +56,25 @@ class IdVerification {
                 
         );
 
+        const appruveClient = services.appruve.client.toUpperCase();
+        const smileClient = services.smile.client.toUpperCase();
+        const credequityClient = services.credequity.client.toUpperCase();
+
+        const executedHandler = IdFilter.getHandler().toUpperCase();
+
         var response = null;
         const pipes = [Appruve,Smile,Credequity];
 
         if(handler != null){
+            handler = handler.toUpperCase();
             
-            if(handler.toUpperCase() === services.appruve.client.toUpperCase()){
+            if(handler === appruveClient){
                 response = await pipes[0].handle(IdFilter);
             }
-            if(handler.toUpperCase() === services.smile.client.toUpperCase()){
+            if(handler === smileClient){
                 response = await pipes[1].handle(IdFilter);
             }
-            if(handler.toUpperCase() === services.credequity.client.toUpperCase()){
+            if(handler === credequityClient){
                 response = await pipes[2].handle(IdFilter);
             }
         }else{
@@ -79,17 +86,17 @@ class IdVerification {
         }
 
         //Validate Appruve Handler result
-        if(IdFilter.getHandler().toUpperCase() == services.appruve.client.toUpperCase()){   
+        if(executedHandler == appruveClient){   
             appruveValidation.validate(response, IdFilter);
         }
 
         //Validate Smile Handler result
-        if(IdFilter.getHandler().toUpperCase() == services.smile.client.toUpperCase()){
+        if(executedHandler == smileClient){
             smileValidation.validate(response);
         }
 
         //Validate Credequity Handler result
-        if(IdFilter.getHandler().toUpperCase() == services.credequity.client.toUpperCase()){
+        if(executedHandler == credequityClient){
             credequityValidation.validate(response, IdFilter);
         }
         

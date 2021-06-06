@@ -9,21 +9,16 @@ class VerifyMe
         this.apiKey = services.verifyMe.api_key;
         this.baseUrl = services.verifyMe.api_url;
 
-        /**
-        * HttpProcessor class to handle axios calls
-        */
-        
-
     }
 
     /**
-     * Process axios calls
-     * 
-     * @param {string} method The call method get|post|put|delete|patch
-     * @param {string} url The url to call
-     * @param {object|formData} payload The payload data to send with the call
-     */
-     process(method, url, payload) {
+    * Process axios calls
+    * 
+    * @param {string} method The call method get|post|put|delete|patch
+    * @param {string} url The url to call
+    * @param {object|formData} payload The payload data to send with the call
+    */
+    process(method, url, payload) {
         //HttpProcessor class to handle axios calls
         let processor = new httpProcessor(this.baseUrl, this.apiKey, this.client);
 
@@ -31,11 +26,11 @@ class VerifyMe
     }
 
     /**
-     * Filter id requests
-     *
-     * @param IdFilter IdFilter
-     * @return response
-     */
+    * Handles the ID request
+    *
+    * @param {object} IdFilter
+    * @return {object}
+    */
     async handle(IdFilter)
     {
         if (!IdFilter.isSuccessful()) {
@@ -83,6 +78,12 @@ class VerifyMe
 
     }
 
+    /**
+    * Transform the ID
+    *
+    * @param {string} type
+    * @return {string}
+    */
     getType(type)
     {
         if (type === constants.idValues.TYPE_DRIVERS_LICENSE) {

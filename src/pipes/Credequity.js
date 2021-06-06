@@ -13,13 +13,13 @@ class Credequity
     }
 
     /**
-     * Process axios calls
-     * 
-     * @param {string} method The call method get|post|put|delete|patch
-     * @param {string} url The url to call
-     * @param {object|formData} payload The payload data to send with the call
-     */
-     process(method, url, payload) {
+    * Process axios calls
+    * 
+    * @param {string} method The call method get|post|put|delete|patch
+    * @param {string} url The url to call
+    * @param {object|formData} payload The payload data to send with the call
+    */
+    process(method, url, payload) {
         //HttpProcessor class to handle axios calls
         let processor = new httpProcessor(this.baseUrl, this.apiKey, this.client);
 
@@ -27,11 +27,11 @@ class Credequity
     }
 
     /**
-     * Filter id requests
-     *
-     * @param IdFilter IdFilter
-     * @return response
-     */
+    * Handles the ID request
+    *
+    * @param IdFilter IdFilter
+    * @return response
+    */
     async handle(IdFilter)
     {
         if (! IdFilter.isSuccessful()) {
@@ -103,13 +103,12 @@ class Credequity
     }
 
     /**
-     * Get ID information via images
-     *
-     * @param {object} IdFilter
-     * @return response
-     */
-     getWithImage(IdFilter)
-     {
+    * Get ID information via images
+    *
+    * @param {object} IdFilter
+    * @return response
+    */
+    getWithImage(IdFilter){
          const relative = (IdFilter.getIDType() === 'NIN') ? 'VerifyNinWithFace' : 'VerifyFrscWithFace';
          
          const url = '/CredOcr/api/v1/' + relative;
@@ -131,7 +130,7 @@ class Credequity
      * @param {object} IdFilter
      * @param {object} body
      * @param {string} url
-     * @return response
+     * @return {object}
      */
     async postData(IdFilter, body, url){
       

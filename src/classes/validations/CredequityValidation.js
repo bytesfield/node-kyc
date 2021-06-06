@@ -21,8 +21,9 @@ class CredequityValidation {
      */
     verify(result, IdFilter){
         const data = result.data;
+        const idType = IdFilter.getIDType();
         
-        if(IdFilter.getIDType() == constants.idValues.TYPE_BVN ){
+        if(idType == constants.idValues.TYPE_BVN ){
             if (data.firstName.toUpperCase() !== IdFilter.getFirstName().toUpperCase()) {
                 return { 'error' : 'Firstname does not match'} ;
             }
@@ -36,13 +37,13 @@ class CredequityValidation {
             }
         }
         
-        if(IdFilter.getIDType() == constants.idValues.TYPE_DRIVERS_LICENSE ){
+        if(idType == constants.idValues.TYPE_DRIVERS_LICENSE ){
             if (data.Birthdate !== IdFilter.getDOB()) {
                 return { 'error' : 'Date of birth does not match'};
             }
         }
         
-        if(IdFilter.getIDType() == constants.idValues.TYPE_NIN ){
+        if(idType == constants.idValues.TYPE_NIN ){
             if (data.firstname.toUpperCase() !== IdFilter.getFirstName().toUpperCase()) {
                 return { 'error' : 'Firstname does not match'} ;
             }
