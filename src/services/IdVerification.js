@@ -3,12 +3,19 @@ const smile = require('../pipes/Smile');
 const credequity = require('../pipes/Credequity');
 const IDFilter = require('../classes/IdFilter');
 const services = require('../config/services');
-const constants = require('../config/constants');
+const pipeline = require('../classes/Pipeline');
 const { filterCountry }= require('../classes/Helper');
+const AppruveValidation = require('../classes/validations/AppruveValidation');
+const SmileValidation = require('../classes/validations/SmileValidation');
+const CredequityValidation = require('../classes/validations/CredequityValidation');
 
 let Appruve = new appruve();
 let Smile = new smile();
 let Credequity = new credequity();
+let appruveValidation = new AppruveValidation();
+let smileValidation = new SmileValidation();
+let credequityValidation = new CredequityValidation();
+let Pipeline = new pipeline();
 
 class IdVerification {
 
@@ -50,203 +57,45 @@ class IdVerification {
         );
 
         var response = null;
-        const pipes = [Credequity,Appruve,Smile];
+        const pipes = [Appruve,Smile,Credequity];
 
         if(handler != null){
             
-            if(handler.toUpperCase() === services.credequity.client.toUpperCase()){
+            if(handler.toUpperCase() === services.appruve.client.toUpperCase()){
                 response = await pipes[0].handle(IdFilter);
             }
-            if(handler.toUpperCase() === services.appruve.client.toUpperCase()){
+            if(handler.toUpperCase() === services.smile.client.toUpperCase()){
                 response = await pipes[1].handle(IdFilter);
             }
-            if(handler.toUpperCase() === services.smile.client.toUpperCase()){
+            if(handler.toUpperCase() === services.credequity.client.toUpperCase()){
                 response = await pipes[2].handle(IdFilter);
             }
         }else{
-            var i;
 
-            for (i = 0; i < pipes.length; i++) {
-
-                var executedPipe  = await pipes[i].handle(IdFilter);
-
-                if(IdFilter.isSuccessful()){
-                    response = executedPipe;
-                    break;
-                }
-                
-                response = execute;
-            }
+            response = Pipeline.send(IdFilter)
+                               .through(pipes)
+                               .thenReturn();
+            
         }
 
         //Validate Appruve Handler result
-        if(IdFilter.getHandler() == services.appruve.client){
-    
-            if(IdFilter.getCountry() == 'GH'){
-                if( IdFilter.getIDType() == constants.idValues.TYPE_VOTER_CARD){
-                    return response;
-                }//Exclude Appruve Field Verification for this
-
-                if( IdFilter.getIDType() == constants.idValues.TYPE_TIN){
-                    if(!response.data.is_valid){
-                        return { 'error' : 'Tin is not valid'} ;
-                    }
-
-                    return response;
-                }//Exclude Appruve Field Verification for this
-                
-                if(IdFilter.getIDType() == constants.idValues.TYPE_DRIVERS_LICENSE){
-                    if(!response.data.is_full_name_match){
-                        return { 'error' : 'Fullname does not match'} ;
-                    }
-
-                    if(!response.data.is_date_of_birth_match){
-                        return { 'error' : 'Date of birth does not match'} ;
-                    }
-                    return response;
-                }//Exclude Appruve Field Verification for this
-
-                if(IdFilter.getIDType() == constants.idValues.TYPE_SSNIT){
-                    if(!response.data.is_full_name_match){
-                        return { 'error' : 'Fullname does not match'} ;
-                    }
-
-                    return response;
-                }//Exclude Appruve Field Verification for this
-
-            }
-
-            if(IdFilter.getIDType() == constants.idValues.TYPE_TIN 
-                ||  IdFilter.getIDType() == constants.idValues.TYPE_KRA 
-                || IdFilter.getIDType() == constants.idValues.TELCO_SUBSCRIBER  
-            ){
-                return response;
-            }//Exclude Appruve Field Verification for this
-
-            const isVerified = this.verifyAppruve(response);
-    
-            if(isVerified == true){
-                return response;
-            }
-                
-            return isVerified;
-
+        if(IdFilter.getHandler().toUpperCase() == services.appruve.client.toUpperCase()){   
+            appruveValidation.validate(response, IdFilter);
         }
 
         //Validate Smile Handler result
-        if(IdFilter.getHandler() == services.smile.client){
-
-            const isVerified = this.verifySmile(response);
-    
-            if(isVerified == true){
-                return response;
-            }
-                
-            return isVerified;
-
+        if(IdFilter.getHandler().toUpperCase() == services.smile.client.toUpperCase()){
+            smileValidation.validate(response);
         }
 
         //Validate Credequity Handler result
-        if(IdFilter.getHandler() == services.credequity.client){
-
-            const isVerified = this.verifyCredequity(response, IdFilter);
-    
-            if(isVerified == true){
-                return response;
-            }
-                
-            return isVerified;
-
+        if(IdFilter.getHandler().toUpperCase() == services.credequity.client.toUpperCase()){
+            credequityValidation.validate(response, IdFilter);
         }
         
         return response;
 
     }
-
-    /**
-     * Verify Appruve information
-     *
-     * @param {object} result
-     * @return boolean
-     */
-    verifyAppruve(result){
-         const data = result.data;
-         
-         if (! data.is_first_name_match) {
-             return { 'error' : 'Firstname does not match'} ;
-         }
-         if (! data.is_last_name_match) {
-            return { 'error' : 'Lastname does not match'};
-         }
-         if (! data.is_date_of_birth_match) {
-            return { 'error' : 'Date of birth does not match'};
-         }
-      
-         return true;
- 
-    }
-
-      /**
-     * Verify Smile information
-     *
-     * @param {object} result
-     * @return boolean
-     */
-    verifySmile(result){
-        const data = result.data;
-
-        if (data.Actions.Verify_ID_Number !== 'Verified') {
-            return { 'error' : data.ResultText } ;
-        }
-     
-        return true;
-
-    }
-
-        /**
-     * Verify Credequity information
-     *
-     * @param {object} result
-     * @param {object} IdFilter
-     * @return boolean
-     */
-    verifyCredequity(result, IdFilter){
-        const data = result.data;
-
-        if(IdFilter.getIDType() == constants.idValues.TYPE_BVN ){
-            if (data.firstName.toUpperCase() !== IdFilter.getFirstName().toUpperCase()) {
-                return { 'error' : 'Firstname does not match'} ;
-            }
-
-            if (data.lastName.toUpperCase() !== IdFilter.getLastName().toUpperCase()) {
-                return { 'error' : 'Lastname does not match'};
-            }
-
-            if (data.dateOfBirth !== IdFilter.getDOB()) {
-                return { 'error' : 'Date of birth does not match'};
-            }
-        }
-
-        if(IdFilter.getIDType() == constants.idValues.TYPE_DRIVERS_LICENSE ){
-
-            if (data.Birthdate !== IdFilter.getDOB()) {
-                return { 'error' : 'Date of birth does not match'};
-            }
-        }
-
-        if(IdFilter.getIDType() == constants.idValues.TYPE_NIN ){
-            if (data.firstname.toUpperCase() !== IdFilter.getFirstName().toUpperCase()) {
-                return { 'error' : 'Firstname does not match'} ;
-            }
-
-            if (data.birthdate !== IdFilter.getDOB()) {
-                return { 'error' : 'Date of birth does not match'};
-            }
-        }
-
-        return true;
-    
-       }
 }
 module.exports = IdVerification;
 

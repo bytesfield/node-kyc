@@ -4,7 +4,7 @@ const services = require('../../src/config/services');
 const sabiCustomer = new SabiCustomer();
 const handler = services.smile.client.toUpperCase();
 
-describe("Credequity Test", () => {
+describe("Smile Test", () => {
 
     it("Should not verify ID if payload is empty", async () => {
 

@@ -7,7 +7,6 @@ const handler = services.credequity.client.toUpperCase();
 describe("Credequity Test", () => {
 
     it("Should not verify NIN if First Name do not match", async () => {
-
         const payload = {
             "id": "00000000000",
             "id_type": "NIN",
@@ -160,7 +159,7 @@ describe("Credequity Test", () => {
 
         expect(response.message).toEqual('DRIVERS_LICENSE Verified Successfully');
         expect(response.handler).toEqual(services.credequity.client);
-    }, 80000);
+    }, 100000);
 
     it("Should not verify ID if payload is empty", async () => {
 
@@ -169,6 +168,6 @@ describe("Credequity Test", () => {
         const response = await sabiCustomer.verifyID(payload, handler);
 
         expect(response.error).toEqual('Payload must not be empty');
-    }, 80000);
+    }, 100000);
 
 });
