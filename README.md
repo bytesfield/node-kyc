@@ -1,14 +1,12 @@
 # Sabi Customer Package
 
-It is a Know Your Customer (KYC) Nodejs Library. In Development Stage
-
 # Description
 
-A Know Your Customer (KYC) Nodejs Package to verify business's customer identity using Smile Identity, Appruve and Credequity KYC services. This service currently support countries like Nigeria(NG), Ghana(GH), Kenya(KE), Uganda(UG).
+A Know Your Customer (KYC) Node Js Package to verify business's customer identity using [SMILE IDENTITY](https://docs.smileidentity.com/), [APPRUVE](https://www.appruve.co/) and [CREDEQUITY](https://credequity.com/) KYC services. This service currently support countries like Nigeria(NG), Ghana(GH), Kenya(KE), Uganda(UG).
 
 ## Installation
 
-[Node](https://nodejs.org/en/) 14 + and [NPM](https://www.npmjs.com/) are required.
+[Node](https://nodejs.org/en/) 13 + required.
 
 To get the latest version of Sabi Customer, simply install it
 
@@ -16,17 +14,9 @@ To get the latest version of Sabi Customer, simply install it
 npm install sabi-customer
 ```
 
-Or add the following line to the `dependencies` block of your `package.json` file.
-
-```
-"sabi-customer": "1.0.*"
-```
-
-You'll then need to run `npm install` or `npm update` to have it installed.
-
 ## Configuration
 
-Once Sabi-Customer is installed, you will need to add the following credentials gotten from the different KYC service providers to your `.env`. Click on the names it will redirect you to their websites where you can sign up and get there API KEYs.
+Once Sabi-Customer is installed, you will need to add the following credentials gotten from the different KYC service providers to your `.env`. Click on their names it will redirect you to their websites where you can sign up and get there API KEYs.
 
 _If you are using a hosting service like heroku, ensure to add the above details to your configuration variables._
 
@@ -65,8 +55,14 @@ SMILE, APPRUVE, CREDEQUITY;
 
 _If you want a specific handler to handle your request you can pass a second argument to the verifyID() method as shown below, else ignore it and it will pass through sabi-customer's pipeline and return the result and the pipe that handled it_
 
+_Note all data used here are dummy data, to get test data you can visit the individual KYC service provider's websites and get data to test_
+
+_The implementation is Asynchronous make sure you use async function_
+
 ```javascript
 const response = await sabiCustomer.verifyID(payload, "SMILE");
+
+console.log(response);
 ```
 
 ### For Nigeria (NG)
