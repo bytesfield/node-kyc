@@ -33,6 +33,9 @@
     "sweet-pipeline": "^1.0.0"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/test/**/*.test.js"
+    ]
   }
 }
