@@ -1,4 +1,4 @@
-<p align="center"><img src="/images/kyc.png" alt="Sweet Pipeline Preview"></p>
+<p align="center"><img src="/images/preview.png" alt="Sweet Pipeline Preview"></p>
 
 # Sabi Customer
 
