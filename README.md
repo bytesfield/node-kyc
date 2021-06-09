@@ -1,4 +1,6 @@
-# Sabi Customer Package
+<p align="center"><img src="/images/kyc.png" alt="Sweet Pipeline Preview"></p>
+
+# Sabi Customer
 
 # Description
 
