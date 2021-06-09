@@ -2,6 +2,14 @@
 
 # Sabi Customer
 
+[![GitHub license](https://img.shields.io/github/license/bytesfield/sabi-customer)](https://github.com/bytesfield/sabi-customer/blob/main/LICENSE.md)
+
+[![Build Status](https://scrutinizer-ci.com/g/bytesfield/sabi-customer/badges/build.png?b=main)](https://scrutinizer-ci.com/g/bytesfield/sabi-customer/build-status/main)
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bytesfield/sabi-customer/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/bytesfield/sabi-customer/?branch=main)
+
+[![GitHub issues](https://img.shields.io/github/issues/bytesfield/sabi-customer)](https://github.com/bytesfield/sabi-customer/issues)
+
 # Description
 
 A Know Your Customer (KYC) Node Js Package to verify business's customer identity using [SMILE IDENTITY](https://docs.smileidentity.com/), [APPRUVE](https://www.appruve.co/) and [CREDEQUITY](https://credequity.com/) KYC services. This service currently support countries like Nigeria(NG), Ghana(GH), Kenya(KE), Uganda(UG).
