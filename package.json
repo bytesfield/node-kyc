@@ -1,6 +1,6 @@
 {
   "name": "sabi-customer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Know Your Customer (KYC) Node Js Package for Africa to verify business's customer identity using SMILE IDENTITY, APPRUVE and CREDEQUITY KYC services.",
   "main": "index.js",
   "scripts": {
