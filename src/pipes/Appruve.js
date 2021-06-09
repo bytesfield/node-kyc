@@ -52,6 +52,8 @@ class Appruve
             const pin =  IdFilter.getPin();
             const tin =  IdFilter.getTin();
             const full_name =  IdFilter.getFullName();
+            const company = IdFilter.getCompany();
+            const registration_number =  IdFilter.getRegistrationNumber();
 
             const body = {
                 'id' : idNumber,
@@ -65,7 +67,9 @@ class Appruve
                 'address' : address,
                 'pin' : pin,
                 'tin' : tin,
-                'full_name' : full_name
+                'full_name' : full_name,
+                'company_name' : company,
+                'registration_number' : registration_number
             };
             
             try {
@@ -85,10 +89,8 @@ class Appruve
                 return IdFilter.getData();
                 
             } catch (error) {
-                //Error occurred
                 IdFilter.setError({'error' : error});
                 
-                console.log(error);
                 return IdFilter.getError();
             }
         }

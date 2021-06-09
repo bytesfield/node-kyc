@@ -31,7 +31,8 @@
     "md5": "^2.3.0",
     "pipeline-js": "^1.0.2",
     "pipes-and-filters": "^0.0.4",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "sweet-pipeline": "^1.0.0"
   },
   "jest": {
     "testEnvironment": "node"

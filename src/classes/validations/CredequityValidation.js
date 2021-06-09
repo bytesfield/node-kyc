@@ -24,6 +24,7 @@ class CredequityValidation {
         const idType = IdFilter.getIDType();
         
         if(idType == constants.idValues.TYPE_BVN ){
+            
             if (data.firstName.toUpperCase() !== IdFilter.getFirstName().toUpperCase()) {
                 return { 'error' : 'Firstname does not match'} ;
             }

@@ -154,10 +154,8 @@ class Credequity
                 IdFilter.setError({'error' : response.error});
              }
         } catch (error) {
-            //Error occurred
             IdFilter.setError({'error' : error});
                 
-            console.log(error);
             return IdFilter.getError();
         }   
     }

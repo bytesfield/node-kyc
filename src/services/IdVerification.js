@@ -3,7 +3,7 @@ const smile = require('../pipes/Smile');
 const credequity = require('../pipes/Credequity');
 const IDFilter = require('../classes/IdFilter');
 const services = require('../config/services');
-const pipeline = require('../classes/Pipeline');
+const Pipeline = require('sweet-pipeline');
 const { filterCountry }= require('../classes/Helper');
 const AppruveValidation = require('../classes/validations/AppruveValidation');
 const SmileValidation = require('../classes/validations/SmileValidation');
@@ -15,7 +15,6 @@ let Credequity = new credequity();
 let appruveValidation = new AppruveValidation();
 let smileValidation = new SmileValidation();
 let credequityValidation = new CredequityValidation();
-let Pipeline = new pipeline();
 
 class IdVerification {
 
@@ -33,7 +32,8 @@ class IdVerification {
         this.gender = data.gender,
         this.full_name = data.first_name + ' ' + data.last_name,
         this.user_id = data.user_id,
-        this.company = data.company
+        this.company = data.company,
+        this.registration_number = data.registration_number
         
     }
 
@@ -52,15 +52,14 @@ class IdVerification {
             this.gender,
             this.full_name,
             this.user_id,
-            this.company
+            this.company,
+            this.registration_number
                 
         );
 
         const appruveClient = services.appruve.client.toUpperCase();
         const smileClient = services.smile.client.toUpperCase();
         const credequityClient = services.credequity.client.toUpperCase();
-
-        const executedHandler = IdFilter.getHandler().toUpperCase();
 
         var response = null;
         const pipes = [Appruve,Smile,Credequity];
@@ -79,25 +78,27 @@ class IdVerification {
             }
         }else{
 
-            response = Pipeline.send(IdFilter)
-                               .through(pipes)
-                               .thenReturn();
+            response = new Pipeline().send(IdFilter)
+                                     .through([pipes[2].handle(IdFilter), pipes[0].handle(IdFilter), pipes[1].handle(IdFilter)])
+                                     .break(true)
+                                     .return();
             
         }
+        const executedHandler = IdFilter.getHandler().toUpperCase();
 
         //Validate Appruve Handler result
         if(executedHandler == appruveClient){   
-            appruveValidation.validate(response, IdFilter);
+            return appruveValidation.validate(response, IdFilter);
         }
 
         //Validate Smile Handler result
         if(executedHandler == smileClient){
-            smileValidation.validate(response);
+            return smileValidation.validate(response);
         }
 
         //Validate Credequity Handler result
         if(executedHandler == credequityClient){
-            credequityValidation.validate(response, IdFilter);
+            return credequityValidation.validate(response, IdFilter);
         }
         
         return response;

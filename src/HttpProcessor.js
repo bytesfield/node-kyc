@@ -2,6 +2,7 @@ const axios = require('axios');
 const services = require('./config/services');
 
 class HttpProcessor {
+    
     /**
     * Initialize the configuration for this class to communicate with axios
     * @param {string} url 
@@ -49,6 +50,7 @@ class HttpProcessor {
                 data: payload
             }).then((response) => {
                 res(response.data)
+
             }).catch((err) => {
                 rej(err.response.data)
             });

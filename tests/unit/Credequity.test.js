@@ -10,6 +10,7 @@ describe("Credequity Test", () => {
         const payload = {
             "id": "00000000000",
             "id_type": "NIN",
+            "country" : "NG",
             "first_name": "KAYODE",
             "last_name": "BABATUNDE",
             "date_of_birth": "24-11-1975",
@@ -18,7 +19,7 @@ describe("Credequity Test", () => {
         }
 
         const response = await sabiCustomer.verifyID(payload, handler);
-
+        console.log(response);
         expect(response.error).toEqual('Firstname does not match');
     }, 80000);
 
@@ -27,6 +28,7 @@ describe("Credequity Test", () => {
         const payload = {
             "id": "00000000000",
             "id_type": "NIN",
+            "country" : "NG",
             "first_name": "CHUKWUEMEKA",
             "last_name": "BABATUNDE",
             "date_of_birth": "24-11-2020",
@@ -43,6 +45,7 @@ describe("Credequity Test", () => {
         const payload = {
             "id": "00000000000",
             "id_type": "NIN",
+            "country" : "NG",
             "first_name": "CHUKWUEMEKA",
             "last_name": "BABATUNDE",
             "date_of_birth": "24-11-1975",
@@ -61,6 +64,7 @@ describe("Credequity Test", () => {
         const payload = {
             "id": "00000000000",
             "id_type": "BVN",
+            "country" : "NG",
             "first_name": "James",
             "last_name": "Doe",
             "date_of_birth": "29-Aug-1988",
@@ -78,6 +82,7 @@ describe("Credequity Test", () => {
         const payload = {
             "id": "00000000000",
             "id_type": "BVN",
+            "country" : "NG",
             "first_name": "John",
             "last_name": "Dave",
             "date_of_birth": "29-Aug-1988",
@@ -96,6 +101,7 @@ describe("Credequity Test", () => {
         const payload = {
             "id": "00000000000",
             "id_type": "BVN",
+            "country" : "NG",
             "first_name": "John",
             "last_name": "Doe",
             "date_of_birth": "29-Aug-1980",
@@ -113,6 +119,7 @@ describe("Credequity Test", () => {
         const payload = {
             "id": "00000000000",
             "id_type": "BVN",
+            "country" : "NG",
             "first_name": "John",
             "last_name": "Doe",
             "date_of_birth": "29-Aug-1988",
@@ -131,6 +138,7 @@ describe("Credequity Test", () => {
         const payload = {
             "id": "00000000000",
             "id_type": "DRIVERS_LICENSE",
+            "country" : "NG",
             "first_name": "CHUKWUEMEKA",
             "last_name": "Doe",
             "date_of_birth": "08-03-1993",
@@ -148,6 +156,7 @@ describe("Credequity Test", () => {
         const payload = {
             "id": "00000000000",
             "id_type": "DRIVERS_LICENSE",
+            "country" : "NG",
             "first_name": "CHUKWUEMEKA",
             "last_name": "Doe",
             "date_of_birth": "08-03-1992",

@@ -6,6 +6,7 @@ class AppruveValidation {
         const idType = IdFilter.getIDType();
 
         if(IdFilter.getCountry() == 'GH'){
+            
             if(idType == constants.idValues.TYPE_VOTER_CARD){
                 return response;
             }//Exclude Appruve Field Verification for this
@@ -68,9 +69,11 @@ class AppruveValidation {
         if (! data.is_first_name_match) {
             return { 'error' : 'Firstname does not match'} ;
         }
+
         if (! data.is_last_name_match) {
             return { 'error' : 'Lastname does not match'};
         }
+
         if (! data.is_date_of_birth_match) {
             return { 'error' : 'Date of birth does not match'};
         }

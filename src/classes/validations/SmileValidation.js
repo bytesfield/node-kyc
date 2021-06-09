@@ -1,4 +1,3 @@
-const services = require('../../config/services');
 
 class SmileValidation {
 
